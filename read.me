@@ -1,0 +1,80 @@
+event_read.pl
+
+A Windows NT Event Log monitor in Perl
+Rich Bowen
+rbowen@databeam.com
+rbowen@rcbowen.com
+
+____DESCRIPTION
+
+This utility will monitor the event logs on any number
+of NT machines, and notify you when an event matches
+certain search criteria.  You can set the criteria,
+the servers that are to be checked, the machines that
+should be notified, and the amount of time that the
+script should wait between checks on the logs.
+
+____LEGAL JUNK
+
+This script can be used, modified, and distributed at
+will.  You can give me credit for this program if your
+conscience bothers you, but keep in mind that this 
+program is distributed as is, with no guarantees of 
+any kind.  I don't guarantee that it will do what
+you expect it to, or that it will work at all. I'm not
+much for writing legal documents, but I guess you
+get the point
+
+____THE INI FILE
+
+The .ini file is composed of 5 kinds of lines:
+
+PAUSE: 300
+
+This is the time (in seconds) that the script pauses before
+it checks all the event logs.
+
+SERVER: servername~Application
+
+This is the name of the server to be checked, followed by the
+log that you want to check.  This latter is one of Application,
+System, or (I forget the other one.)  You can have multiple
+ones of these.
+
+NOTIFY: rbowen3
+
+This is the name of the machine that is to be notified.  You 
+may have more than one of these. The machines will be notified
+by the "net send" command.  If the machine to be notified
+is a Win95 machine, it must be running "WinPopup".
+
+SEARCH: Source==/Exchange/
+
+This is a list of regexes that will be applied to the event log 
+entries to see if you are to be notified of the error.  There 
+are 4 fields that you can search - Source, EventType, Strings,
+and Data.  Actually, you can search any of the fields in the 
+event log entry - those just seemed to be the ones that made 
+sense.
+
+LASTRUN: 876743590
+
+This is the time stamp on the last event log entry that was 
+checked.  The first time you run this, you should set it to 
+some positive non-zero value.  If you know what this time number
+actually represents, you might want to set it to some value that
+makes sense to you, such as last Tuesday.  If you don't know what
+it means, just leave it set to what it is, and it will work.
+
+____OTHER: CONFIG, BUG REPORTS, ETC.
+
+The only other thing that you need to configure is the location 
+of the .ini file.  This is defined on the first line of the script
+after the comments.  If this is not set correctly, nothing will
+happen.
+
+This script will run only on Windows NT with Perl 5.something.  If
+you get error messages when you first run the script, and you 
+have set the .ini file location correctly, the first place that
+you need to check is http://www.inforoute.cgs.fr/leberre1/perldoc.htm,
+where you will find bug fixes to the EventLog module.
